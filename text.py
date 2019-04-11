@@ -3,7 +3,7 @@ import cv2
 import pytesseract
 from PIL import Image
 from difflib import get_close_matches
-pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files (x86)/Tesseract-OCR/tesseract'
+pytesseract.pytesseract.tesseract_cmd = "C:/Program Files (x86)/Tesseract-OCR/tesseract"
 
 def text(img):
     cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
@@ -19,27 +19,31 @@ def text(img):
     return str(result)
 
 
-ops = ['mozzie', 'gridlock', 'nomad', 'kaid', 'clash', 'maverick', 'maestro', 'alibi',
-     'lion', 'finka', 'vigil', 'dokkaebi', 'zofia', 'ela', 'ying', 'lesion', 'mira',
-     'jackal', 'hibana', 'echo', 'caveira', 'capitao', 'blackbeard', 'valkyrie', 'buck',
-      'frost', 'mute', 'sledge', 'smoke', 'thatcher', 'ash', 'castle', 'pulse', 'thermite',
-      'montagne', 'twitch', 'doc', 'rook', 'jager', 'bandit', 'blitz', 'iq', 'fuze', 'glaz', 'tachanka', 'kapkan']
+ops = ["KingBlazeIV", "Trank", "TIMMAY67", "Gyrogue |", "Massadio", "||| QUickz |||", "Ryasoki", "EdibleHornet",
+     "xRazbxrry", "Jonboy507", "xSkreeminSkullx", "CharlieAddo2", "BROZ"]
 
 #read the image
-image = cv2.imread("image.png")
+image = cv2.imread("image.jpg")
 #get image properties
-h, w, c = image.shape
+h, w = 1080, 1920
 
 output = []
-for i in range(5):
-# cut image on each attacker name
-  atk = image[round(h*0.425):round(h*0.50), round(w*0.09)+(i*round(w*0.182)):round(w*0.23)+(i*round(w*0.18))]
-  # get attacker name
-  textatk = text(atk)
-  try:
-      # get close matches from attackers list and apends to list
-      output.append(get_close_matches(textatk.lower(), ops, n=1, cutoff = 0.6)[0])
-  except:
-      pass
+for i in range(14):
+    # cut image on each name
+    j = (i*round(w*0.0211))
+    name = image[round(h*0.21)+j:round(h*0.25)+j, round(w*0.18):round(w*0.28)]
+    # get name
+    nametext = text(name)
+    print(nametext)
+
+    # display image while processing (press q to skip to next image)
+    # cv2.imshow("image", name)
+    # cv2.waitKey(0)
+
+    try:
+        # get close matches from attackers list and apends to list
+        output.append(get_close_matches(nametext, ops, n=1, cutoff = 0.6)[0])
+    except:
+        pass
 
 print(output)
